@@ -1,0 +1,39 @@
+<h1>Index :: by <%=params['s'] == 's' ? 'Source' : 'Name'%></h1>
+<br/>
+
+<% 
+prev = '' 
+curr = ''
+curr_index = 0
+half = (get_recipe_count / 2) + 1
+time_to_break = false
+already_broke = false
+%>
+
+<div class="row">
+  <div class="span5">
+       
+      <div>
+      <% @recipes.each do |recipe| %>
+        <% 
+        curr_index += 1 
+        time_to_break = true if curr_index > half
+        curr = params['s'] == 's' ? recipe.source : recipe.title.first.upcase 
+        curr = '[No Source]' if curr == ''
+        %>
+        <% if curr != prev %>
+          <% prev = curr %>    
+          </div>
+          <% if time_to_break == true && already_broke == false %>
+            <% already_broke = true %>
+            </div><div class="span5">
+          <% end %>
+          <div style="margin-bottom: 8px;">
+          <h2><%=curr%></h2>
+        <% end %>
+        <div><%=link_to(recipe.title, recipe)%></div>
+      <% end %>
+      </div>
+
+  </div>
+</div>

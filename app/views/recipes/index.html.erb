@@ -1,0 +1,46 @@
+<h1><%=@title%></h1>
+
+<div style="margin-bottom: 6px;">
+  <%= form_tag '', :method => :get, :id => 'search_form', :style => 'margin:0;' do %>
+    <table style="width: 100%;">
+      <tr><td>
+        <%= search_field_tag :term, @filters[:term], :placeholder => 'Search', :class => "input-large index-search", :style => "margin-right: 1px;"%><a href="#" class="btn" id="recipe-filter-btn"><i class="icon-filter"></i></a>    
+      </td><td style="text-align: right; vertical-align: bottom;" class="recipe-index-sort">
+        <% if @filters[:term].empty? %>
+          <em>Sort by:</em>&nbsp;         
+          <%=link_to 'Date', recipes_path(:sort => 'date'), :class => @filters[:sort] == 'date' ? 'active-sort' : '' %> |           
+          <%=link_to 'Name', recipes_path(:sort => 'alpha'), :class => @filters[:sort] == 'alpha' ? 'active-sort' : ''  %> | 
+          <%=link_to 'Name (z-a)', recipes_path(:sort => 'alphadesc'), :class => @filters[:sort] == 'alphadesc' ? 'active-sort' : ''  %>          
+        <% else %>
+          <%=link_to 'Clear Filter', recipes_path(:term => '', :sort => 'alpha') %>&nbsp;
+        <% end %>
+        &nbsp;
+      </td></tr>
+    </table>
+  <% end %>   
+</div>
+
+<table id="recipe-list" class="table table-striped">
+    <tbody>
+        <%= render :partial => "recipe", :collection => @recipes %>
+    </tbody>
+</table>  
+
+<div style="text-align: right;">
+    <%= paginate @recipes, :window => 3 %>
+</div>
+
+<script>
+$(document).ready(function () {
+
+    // filter autocomplete (on list view)
+    $("input#term").autocomplete({
+        source: '<%=search_title_recipes_path%>?category_id=<%=@filters[:category_id]%>&tag=<%=@filters[:tag]%>',
+        minLength: 2, delay: 500, autoFocus: false,
+        select: function(event, ui) { 
+            $("#search_form").val(ui.item.label);
+            $("#search_form").submit(); }    
+    });
+    $("#recipe-filter-btn").click(function(){ $("#search_form").submit(); return false; });  
+});
+</script>

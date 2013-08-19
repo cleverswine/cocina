@@ -1,0 +1,58 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="page-nav">
+  <% if params['f'] == 'i' %>
+    <a class="btn" href="<%=recipes_path%>"><i class="icon-chevron-left"></i>&nbsp;Recpice list</a> 
+    <a class="btn" href="<%=recipe_path(@recipe) %>"><i class="icon-book"></i>&nbsp;View Recipe</a>   
+  <% else %>
+    <a class="btn" href="<%=recipe_path(@recipe)%>"><i class="icon-chevron-left"></i>&nbsp;Back to recipe</a> 
+  <% end %>            
+</div>
+
+<h1><%=@recipe.title %></h1>
+
+<div class="rounded-container">   
+  <%= form_for @photo, :url => recipe_photos_path(@recipe), :html => { :multipart => true } do |f| %>
+      <fieldset class="control-group">
+      <%= label_tag('Add a photo from your computer', nil, :class => "control-label") %> 
+        <div class="controls">
+          <%= f.file_field :photo %>                
+          <%= f.hidden_field :recipe_id %>
+        </div>
+        <div class="controls">
+          <%= f.submit 'Add Photo', :class => 'btn btn-primary' %>
+        </div>
+      </fieldset>          
+  <% end %>   
+</div>
+<div class="rounded-container">
+  <%= form_for @photo, :url => recipe_photos_path(@recipe) do |f| %>
+      <fieldset class="control-group">
+      <%= label_tag('Or, add a photo from the internet', nil, :class => "control-label") %> 
+        <div class="controls">
+          <%= f.text_field :remote_photo_url, :class => 'span8' %>                
+          <%= f.hidden_field :recipe_id %>
+        </div>
+        <div class="controls">
+          <%= f.submit 'Add Photo', :class => 'btn btn-primary' %>
+        </div>
+      </fieldset>          
+  <% end %>   
+</div>  
+
+<div class="recipe-section">  
+  <br/>
+  <% @photos.each do |photo| %>          
+    <%= image_tag photo.photo.url(:medium), :class => 'recipe-image', :style => 'margin-bottom: 2px;' %>
+    <br/>
+    <%= link_to(recipe_photo_path(:id => photo, :recipe_id => @recipe.id), :confirm => 'Are you sure?', :method => :delete, :class => "btn") do %><i class="icon-trash"></i>&nbsp;Remove<% end %>
+    <% if photo.is_primary %>
+      &nbsp;<i class="icon-star"></i>&nbsp;Primary
+    <% else %>
+      <%= link_to(setprimary_recipe_photo_path(:id => photo, :recipe_id => @recipe.id), :class => "btn") do %><i class="icon-star-empty"></i>&nbsp;Set Primary<% end %>
+    <% end %>
+    <br/><br/>
+  <% end %>
+</div>

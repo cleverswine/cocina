@@ -1,0 +1,47 @@
+<tr id="recipe-list-row-<%=recipe.id%>">
+  <td class="thumb-col">
+      <% if recipe.photos.any?
+          recipe_thumb = recipe.photos.order('is_primary desc').order('created_at desc')[0]
+          recipe_photo_count = recipe.photos.count
+          %>  
+          <div class="imageSub">
+            <%= link_to(recipe) do %>
+              <%=image_tag(recipe_thumb.photo.url(:thumb), :class => 'thumb')%>
+            <% end %>
+            <% if recipe_photo_count > 1 %><div class="blackbg"><%=recipe_photo_count%></div><% end %>
+          </div> 
+      <% else %>
+          <%= link_to(recipe) do %>
+              <%=image_tag('nophoto.png', :class => 'thumb')%>
+          <% end %>                            
+      <% end %>   
+  </td>
+  <td class="title-col">
+      <div class='recipe-list-title draggable_recipe_category' data-id='<%=recipe.id%>' data-catid='<%=recipe.category.id%>'>
+          <%= link_to(recipe.title, recipe) %>
+      </div>
+      <div class='tight'>
+        <span>Category: <%=link_to recipe.category.name, recipes_by_category_url(:category_id => recipe.category.id) %> :: 
+          <%= recipe.tags.collect{|tag| link_to tag.name, recipes_by_category_and_tag_url(:category_id => recipe.category.id, :tag => tag.name)}.join(', ').html_safe %>                      
+        </span>
+      </div>
+      <div class='tight'>
+        <% if recipe.source_detail != '' || recipe.source != '' %>
+          <span>Source:               
+            <% if recipe.source_detail.start_with?("http") %>
+              <a href="<%=recipe.source_detail%>"><%=recipe.source != '' ? recipe.source : recipe.source_detail %></a>
+            <% else %>
+              <%=recipe.source %><%= ', ' if recipe.source_detail != '' %> <%=recipe.source_detail %> 
+            </span><% end %>
+        <% end %>
+      </div>
+  </td>
+  <td class="actions-col">
+      <div class="recipe-actions" id="recipe_actions_<%=recipe.id%>" style="display:none;">
+        <a href="<%=edit_recipe_path(recipe)%>?f=i" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+        <a href="#" id="delete_<%=recipe.id%>" class="delete-button" rel="tooltip" title="Remove"><i class="icon-trash"></i></a>
+        <a href="<%=recipe_photos_path(recipe)%>?f=i" rel="tooltip" title="Manage Photos"><i class="icon-picture"></i></a>
+        <a href="<%=print_recipe_path(recipe) %>" rel="tooltip" title="Print View"><i class="icon-print"></i></a>
+       </div>
+  </td>
+</tr>  

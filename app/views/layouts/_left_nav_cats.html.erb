@@ -1,0 +1,13 @@
+<ul class="left-nav">
+    <% @categories.each do |category| %>
+      <li class='left_nav_category<%=" active" if @filters[:tag] == '' && @filters[:category_id].to_s == category[:id].to_s %>' data-id='<%=category[:id].to_s%>' data-tag=''>
+          <%=link_to category[:name], recipes_by_category_url(:category_id => category[:id])%>
+      </li>
+      <% category[:tags].each do |tag| %>
+        <li class="left_nav_category li-tag<%=' active' if @filters[:tag] == tag[:name] && @filters[:category_id].to_s == category[:id].to_s %>" data-id='<%=category[:id]%>' data-tag='<%=tag[:name]%>'>
+          <a href="<%=recipes_by_category_and_tag_url(:category_id => category[:id], :tag => tag[:name])%>">
+            <%=tag[:name]%>&nbsp;<span class="tag-count">(<%=tag[:count]%>)</span></a>
+        </li>
+     <% end %>
+  <% end %>    
+</ul>

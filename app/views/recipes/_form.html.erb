@@ -1,0 +1,182 @@
+<%= form_for(@recipe, :class => 'form-vertical', :id => 'recipe_form') do |f| %>
+
+  <% if @recipe.id %>
+    <div class="page-nav">
+        <% if params['f'] == 'i' %>
+          <a class="btn" href="<%=recipes_path%>"><i class="icon-chevron-left"></i>&nbsp;Recpice list</a>
+        <% else %>
+          <a class="btn" href="<%=recipe_path(@recipe)%>"><i class="icon-chevron-left"></i>&nbsp;Back to recipe</a> 
+        <% end %>
+        <%=submit_tag 'Save Changes', :class => 'btn' %>    
+    </div>
+  <% else %>
+    <div class="page-nav">
+      <a class="btn" href="<%=recipes_path%>"><i class="icon-chevron-left"></i>&nbsp;Recpice list</a>    
+      <%=submit_tag 'Create Recipe', :class => 'btn' %>      
+      <a class="btn" href="#" id="import_nav_btn"><i class="icon-download-alt"></i>&nbsp;Import recipe details...</a>       
+    </div>
+  <% end %>
+  
+  <div class="recipe-view">
+    
+    <fieldset>
+      <% if @recipe.errors.any? %>    
+          <% @recipe.errors.full_messages.each do |msg| %>
+            <div class="alert alert-error"><%= msg %></div>
+          <% end %>  
+      <% end %>
+    </fieldset>
+
+    <fieldset class="control-group<%=' error' if @recipe.errors.messages[:title]%>">
+      <%= label_tag(:title, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :title, :class => 'span8 focused' %> 
+      </div>
+    </fieldset> 
+
+     <fieldset class="control-group">
+      <%= label_tag(:category_id, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.select(:category_id, options_from_collection_for_select(Category.all, "id", "name", @recipe.category_id)) %>
+      </div>
+    </fieldset>              
+
+     <fieldset class="control-group<%=' error' if @recipe.errors.messages[:tag_list]%>">
+      <%= label_tag('Sub-categories', nil, :class => "control-label") %> 
+      <div class="controls">        
+        <% recipe_tags = @recipe.tags.map { |t| t.name } %>        
+        <% @categories.each do |category| %>
+          <div class="category-tags-select" style="display:<%=@recipe.category_id==category[:id] ? 'block' : 'none'%>;" id="category-tag-section-<%=category[:id]%>">
+            <% 
+              tag_count = category[:tags].length 
+              #half = tag_count > 3 ? (tag_count / 2) + (tag_count % 2) + 1 : tag_count + 1
+              half = (tag_count / 2) + (tag_count % 2) + 1
+              curr = 1
+            %>
+            <table class="sub-categories"><tr><td>
+            <% category[:tags].each do |tag| %>
+              <% if curr == half %>
+                </td><td>
+              <% end %>
+              <% curr += 1 %>
+              <input type="checkbox" data-cat="<%=category[:id]%>" id="recipe_tag_list_<%=category[:id]%>_<%=tag[:name].sub(/ /, '')%>" name="recipe[tag_list][]" value="<%=tag[:name]%>" <%="checked" if recipe_tags.include?(tag[:name]) && (@recipe.category_id==category[:id]) %>/>
+                &nbsp;<label for="recipe_tag_list_<%=category[:id]%>_<%=tag[:name].sub(/ /, '')%>" style="display:inline;"><%=tag[:name]%></label><br/>
+            <% end %>
+            </td></tr></table>
+          </div>
+        <% end %>
+        <input type="checkbox" id="new_tag_checkbox" name="new_tag_checkbox" value="new_tag_checkbox" style="margin-top: 0px; margin-bottom: 6px;" />
+        <%= text_field_tag "new_tag_text", nil, :class => "span3", :style => "padding: 1px; margin-top: 2px;" %>
+      </div>
+    </fieldset>
+    
+    <fieldset class="control-group">
+      <%= label_tag('Description (optional)', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_area :description, :rows => '2', :class => 'span8' %>
+      </div>
+    </fieldset> 
+
+    <fieldset class="control-group">
+      <%= label_tag(:ingredients, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_area :ingredients, :rows => '8', :class => 'span8' %>
+      </div>
+    </fieldset> 
+    
+    <fieldset class="control-group">
+      <%= label_tag(:instructions, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_area :instructions, :rows => '8', :class => 'span8' %>
+      </div>
+    </fieldset> 
+       
+    <fieldset class="control-group">
+      <%= label_tag(:servings, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.select(:servings, options_for_select((1..25), @recipe.servings)) %>
+      </div>
+    </fieldset> 
+
+    <fieldset class="control-group<%=' error' if @recipe.errors.messages[:time_to_make]%>">
+      <%= label_tag(:time_to_make, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :time_to_make, :class => 'span2' %>
+      </div>
+    </fieldset> 
+    
+    <fieldset class="control-group">
+      <%= label_tag('Source (web site name, book name, etc.)', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :source, :class => 'span8' %> 
+      </div>
+    </fieldset> 
+    
+    <fieldset class="control-group">
+      <%= label_tag('Source Detail (web site url, book page number, etc.)', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :source_detail, :class => 'span8' %> 
+      </div>
+    </fieldset> 
+  
+    <% if @photo_url %>
+        <%=hidden_field_tag 'photo_url', @photo_url%>
+    <% end %>
+       
+    <%=submit_tag @recipe.id ? 'Save Changes' : 'Create Recipe', :class => 'btn btn-primary' %>
+    
+  </div>  <!-- /recipe-view -->
+
+<% end %>
+ 
+<script type="text/javascript">
+  $(document).ready(function() {    
+    
+    $('#recipe_title').focus();
+    
+    // ---------------------------------------------------------------
+    // Sub-category check box/text field for new tag
+    // ---------------------------------------------------------------
+    $("#new_tag_text").keyup(function () {
+      var cb = $("#new_tag_checkbox");      
+      if (jQuery.trim($(this).val()).length > 0){ cb.prop('checked', true); }
+      else { cb.prop('checked', false); }
+    });
+    $("#new_tag_text").change(function () {
+      var cb = $("#new_tag_checkbox");      
+      if (jQuery.trim($(this).val()).length > 0){ cb.prop('checked', true); }
+      else { cb.prop('checked', false); }
+    });
+    $("#recipe_category_id").change(function(){ 
+      var cat_id = $(this).val();
+      $(".category-tags-select").hide();
+      $("#category-tag-section-" + cat_id).show();
+    });
+    
+    // ---------------------------------------------------------------
+    // nicEditor
+    // ---------------------------------------------------------------
+    new nicEditor({
+      fullPanel : true,
+      iconsPath : '/assets/nicedit/nicEditorIcons.gif'
+     }).panelInstance('recipe_ingredients'); 
+     
+    new nicEditor({
+      fullPanel : true,
+      iconsPath : '/assets/nicedit/nicEditorIcons.gif'
+     }).panelInstance('recipe_instructions');     
+      
+    // ---------------------------------------------------------------
+    // Save buttons
+    // ---------------------------------------------------------------    
+    $('form.new_recipe').submit(clearCheckBoxes);
+    $('form.edit_recipe').submit(clearCheckBoxes);
+    
+    function clearCheckBoxes(){
+        var cat_id = $("#recipe_category_id").val();
+        $('table.sub-categories tbody tr td input:checkbox[data-cat!=' + cat_id +']').prop('checked', false);
+        //return false;    
+    }
+    
+  });
+</script>

@@ -1,0 +1,31 @@
+<%=render :partial => 'layouts/header'%>    
+    
+<%=render :partial => 'layouts/nav'%>
+
+<div class="container">
+
+    <div class="row">
+      <% if current_user.is_admin %>
+      <div class="span3">
+          <h2>Admin</h2>
+          <ul class="left-nav">
+            <li><a href="<%=admin_categories_path%>">Categories</a></li>
+            <li><a href="<%=tagmaint_admin_categories_path%>">Tag Maintenance</a></li>                          
+            <li><a href="<%=admin_users_path%>">Registered Users</a></li>   
+            <li><a href="<%=admin_scarfers_path%>">Scarfers</a></li>          
+          </ul>
+      </div>
+      <% end %>
+      <div class="span9">
+        <div class="admin">
+          <% if flash[:notice] %>
+            <div class="alert alert-success"><%= flash[:notice] %></div>
+          <% end %>        
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    
+    <%=render :partial => 'layouts/footer'%>
+
+</div>

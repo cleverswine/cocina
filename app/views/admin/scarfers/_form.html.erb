@@ -1,0 +1,116 @@
+﻿<%= form_for([:admin, @scarfer], :class => 'form-vertical') do |f| %>
+
+<div>
+
+    <fieldset>
+      <% if @scarfer.errors.any? %>    
+          <% @scarfer.errors.full_messages.each do |msg| %>
+            <div class="alert alert-error"><%= msg %></div>
+          <% end %>  
+      <% end %>
+    </fieldset>
+    
+    <div id="admin-scarfer-testresults" title="Test Results">
+      <pre id="admin-scarfer-testresults-val">Test results will show here...</pre>
+    </div>
+    
+    <fieldset class="control-group">          
+      <%= label_tag('Test URL', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= text_field_tag 'testurl', 'http://allrecipes.com/recipe/hearty-vegetable-lasagna/', :class => 'span8' %> 
+      </div> 
+    </fieldset>        
+    
+    <hr/>
+    
+    <fieldset class="control-group<%=' error' if @scarfer.errors.messages[:name]%>">
+      <%= label_tag('Scarfer Name', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :name, :class => 'span8 focused' %> 
+      </div>
+    </fieldset> 
+
+    <fieldset class="control-group<%=' error' if @scarfer.errors.messages[:source_name]%>">
+      <%= label_tag('Source Name (shows as recipe source)', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :source_name, :class => 'span8' %> 
+      </div>
+    </fieldset>      
+    
+    <fieldset class="control-group<%=' error' if @scarfer.errors.messages[:url_match]%>">
+      <%= label_tag('Source url match (ex. allrecipes.com)', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :url_match, :class => 'span8' %> 
+      </div>
+    </fieldset> 
+
+    <fieldset class="control-group">
+      <%= label_tag('Example value for sections below', nil, :class => "control-label") %>   
+<pre>
+{ 
+"node_path": "css: span.ingredients",
+"section_template": "&lt;ol&gt;~&lt;/ol&gt;",
+"item_template": "&lt;li&gt;~&lt;/li&gt;",
+"attribute": "src",
+"subs": [
+  {"token":"x", "replace": "y"},
+  {"token":"a", "replace": "b"}
+  ]
+}
+</pre>
+    </fieldset>
+    
+    <fieldset class="control-group">
+      <%= label_tag('Title', nil, :class => "control-label") %>           
+      <div class="controls">
+        <%= f.text_area :title, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="title">Test</a>
+      </div>
+    </fieldset> 
+
+    <fieldset class="control-group">
+      <%= label_tag('Description', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_area :description, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="description">Test</a>
+      </div>
+    </fieldset> 
+    
+    <fieldset class="control-group">
+      <%= label_tag('Photo', nil, :class => "control-label") %>           
+      <div class="controls">
+        <%= f.text_area :photo, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="photo">Test</a>
+      </div>
+    </fieldset> 
+    
+    <fieldset class="control-group">
+      <%= label_tag('Ingredients', nil, :class => "control-label") %>           
+      <div class="controls">
+        <%= f.text_area :ingredients, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="ingredients">Test</a> 
+      </div>
+    </fieldset> 
+
+    <fieldset class="control-group">
+      <%= label_tag('Instructions', nil, :class => "control-label") %>           
+      <div class="controls">
+        <%= f.text_area :instructions, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="instructions">Test</a> 
+      </div>
+    </fieldset> 
+    
+    <fieldset class="control-group">
+      <%= label_tag('Time to make', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_area :time_to_make, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="time_to_make">Test</a>
+      </div>
+    </fieldset> 
+            
+    <fieldset class="control-group">
+      <%= label_tag('Servings', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_area :servings, :rows => '8', :class => 'span8' %><a href="#" class="btn test-btn" id="servings">Test</a>
+      </div>
+    </fieldset> 
+    
+    <%=submit_tag @scarfer.id ? 'Update Scarfer' : 'Create Scarfer', :class => 'btn btn-primary' %>
+            
+  </div>  <!-- /recipe-view -->
+
+<% end %>

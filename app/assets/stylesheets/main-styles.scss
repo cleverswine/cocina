@@ -1,0 +1,306 @@
+/*
+http://twitter.github.com/bootstrap/less.html#variables
+*/
+$baseFontSize:          13px !default;
+$baseFontFamily:        "Helvetica Neue",Helvetica,Arial,sans-serif !default;
+$baseLineHeight:        16px !default;
+
+$gridColumns:           12 !default;
+$gridColumnWidth:       50px !default;
+$gridGutterWidth:       15px !default;
+
+$borderColor:           #E1E1E1;
+$headerColor:           #8B623D;
+$navGradientBottom:     #111111;  //#0F1B3D;
+$navGradientTop:        lighten($navGradientBottom,20);
+$linkColor:             #3A4961; //#8A6338 !default;
+$grayLight:             #777777;
+$topNavLinks:           lighten($grayLight,20);
+
+@import "bootstrap";
+
+body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      
+@import "bootstrap-responsive";
+
+/* Global */
+.revision {
+  color: #ffffff;
+}
+em {
+  color: $grayLight;
+}
+h1
+{
+    font-family: Georgia,serif;
+    font-size: 16px;
+    line-height: 1.3;
+    margin: 0;
+    margin-bottom: 8px;
+    padding: 0;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+h2
+{
+    color: $headerColor;
+    font-family: Georgia,serif;
+    font-size: 16px;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+.thumb 
+{
+    width: 64px;
+    height: 48px;
+    padding: 3px;
+    background-color: #ffffff;
+    border: 1px solid $borderColor;   
+}
+div.imageSub { position: relative; width: 68px; }
+div.imageSub img { z-index: 1; }
+div.imageSub div {
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  padding: 2px;
+}
+div.imageSub div.blackbg {
+  z-index: 2;
+  color: $grayDarker;
+  background-color: #ffffff;    
+  opacity:0.7;
+  line-height: .8em;
+  font-weight: bold;
+  font-size: .8em;
+  border: 1px solid $borderColor;
+}
+.rounded-container {
+  border: 1px solid $borderColor; 
+  border-radius: 8px 8px 8px 8px;
+  padding: 12px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+/* Top Nav */
+.navbar {
+  //margin-bottom: 20px;
+}
+.navbar-inner {
+  background-image: -moz-linear-gradient(center top, $navGradientTop, $navGradientBottom);
+}
+.navbar-search .search-query:-moz-placeholder {
+  color: $grayDark;
+}
+.navbar-search .search-query {
+  background-color: lighten($grayLight,40);  
+}
+.navbar .brand {
+  color: $topNavLinks;
+}
+.navbar .nav > li > a {
+  color: $topNavLinks;
+}
+
+/* Page Nav */
+.page-nav
+{
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+input.index-search {
+      margin: 0px;
+      margin-right: 2px;
+      border: 1px solid $borderColor;
+      color: $grayLight;  
+      padding: 5px;
+}
+
+/* Left Nav */
+.active {
+  background-color: #F0F4F8;
+}
+.tag-count {
+  color: $grayLight;
+  font-size: .8em;
+}
+ul.left-nav
+{
+    list-style: none outside none;
+    margin-top: 3px;
+    margin-left: 0px;
+    margin-bottom: 18px;
+    padding: 0;
+    width: 90%;
+    border-top: 1px solid $borderColor;
+    li {
+      border-bottom: 1px solid $borderColor;
+      font-weight: bold;      
+      a {
+        display: block;
+        padding: 4px 0 4px 8px;
+        width: 100%;
+        color: $textColor;      
+      }
+    }
+}
+ul.left-nav li.li-tag {
+  padding-left: 16px;
+  font-weight: normal;     
+}
+
+/* Footer */
+#footer
+{
+    margin-top: 18px;    
+    font-size: .8em;
+    text-align: right;
+    hr {
+      margin-bottom: 4px;
+    }
+}
+
+/* Edit */
+table.sub-categories {
+  td {
+    padding-right: 28px;
+    vertical-align: top;
+  }
+}
+
+/* Index */
+.inline_tag_edit {
+  margin: 0px;
+  padding: 0px;
+}
+table#recipe-list
+{
+    border: 1px solid $borderColor;   
+    td {
+      border: 0px;
+      border-bottom: 1px dashed $borderColor; 
+    }
+}
+.recipe-index-sort a.active-sort {
+  text-decoration: underline;
+}
+.recipe-index-sort {
+  color: $gray;
+  a {
+    color: $grayLight;
+  }
+}
+.thumb-col {
+  width: 68px;
+}
+td.actions-col {
+  text-align: right;
+  width: 100px;
+  padding-right: 10px;
+}
+.title-col div.recipe-list-title {
+  font-size: 1.3em;  
+  margin-bottom: 3px;  
+  a {
+    color: $textColor;
+  }
+}
+.title-col div.tight {
+    margin: 0;
+    padding: 0; 
+    span {
+      font-size: .9em;
+    }     
+}
+.nav li a 
+{
+    font-size: .9em;   
+}
+
+/* Item: Detail, Edit, Photos */
+.recipe-section {
+    margin-bottom: 16px;
+}
+.recipe-ingredients, .recipe-instructions {  
+  margin-top: 6px;
+  ul, ol {
+    li {
+      margin-bottom: 6px;
+    }
+  }
+}
+.recipe-section.recipe-meta {
+  margin-top: 20px;
+}
+.recipe-meta {    
+    font-size: .9em;
+    color: $grayLight;
+}
+.recipe-image table tr td {
+    vertical-align: top;
+}
+.recipe-image table tr td.thumb {
+   margin-left: 4px;
+   margin-bottom: 4px;   
+}
+.big-image {
+    padding: 3px;
+    background-color: #ffffff;
+    border: 1px solid $borderColor;  
+}
+.right-half, .left-half {
+    padding-left: 12px; 
+    padding-right: 8px;    
+    margin-bottom: 8px;
+}
+.right-half {
+  border-left: 1px solid $borderColor;
+}
+.recipe-card {
+    border: 1px solid $borderColor; border-radius: 8px 8px 8px 8px; padding-top: 14px;
+}
+.recipe-yield {
+    padding-left: 6px;
+}
+#all-tags ul {
+  list-style: none outside none;
+  margin-left: 2px;
+  li { 
+    margin-top: 6px;  
+    a { display: block; }
+  }
+}
+#recipe_servings {
+  width: 60px;
+}
+
+/* Admin */
+.admin {
+  h5 {
+    font-style: italic;
+    color: $grayLight;
+    margin-bottom: 12px;
+  }
+  ul {
+    list-style: none outside none;
+    margin-top: 3px;
+    margin-left: 0px;
+    margin-bottom: 18px;
+    padding: 0;
+    width: 100%;
+    li {
+      border-bottom: 1px dashed $borderColor;
+      padding: 8px;    
+    }
+  }
+}
+.admin-list-action {
+  text-align: center;
+}

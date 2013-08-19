@@ -1,0 +1,27 @@
+<% if @category.errors.any? %>    
+    <% @category.errors.full_messages.each do |msg| %>
+      <div class="alert alert-error"><%= msg %></div>
+    <% end %>  
+<% end %>
+
+<div class="rounded-container">  
+  <%= form_for([:admin, @category], :class => 'form-horizontal') do |f| %>
+  <fieldset>  
+    <div class="control-group">
+      <%= label_tag(:name, nil, :class => "control-label") %> 
+      <div class="controls">
+        <%= f.text_field :name, :class => 'input-xlarge focused' %> 
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag :description, nil, :class => "control-label" %>  
+      <div class="controls">
+        <%= f.text_field :description, :class => 'input-xlarge' %>
+      </div>
+    </div>
+    <div>
+      <%= f.submit nil, :class => 'btn btn-primary' %>    
+    </div>    
+  </fieldset>
+  <% end %>
+</div>

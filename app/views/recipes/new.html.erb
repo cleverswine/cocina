@@ -1,0 +1,7 @@
+<div id="new-recipe-import" title="Import recipe details from URL">
+    <p><br/>Enter the URL of the recipe page: <em>(example: http://allrecipes.com/recipe/1)</em></p>
+    <%=text_field_tag 'recipe_from_url_url', nil, :class => 'span6', :style=>'margin-top:8px;'%>    
+    <a href="#" class="btn" id="recipe_from_url">Import</a> 
+</div>
+
+<%=render "form" %>

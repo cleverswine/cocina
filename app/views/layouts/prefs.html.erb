@@ -1,0 +1,27 @@
+<%=render :partial => 'layouts/header'%>    
+    
+<%=render :partial => 'layouts/nav'%>
+
+<div class="container">
+
+    <div class="row">
+      <div class="span3">
+          <h2>Preferences</h2>
+          <ul class="left-nav">
+            <li><a href="<%=edit_admin_preference_path(current_user.id)%>">General Settings</a></li>
+            <li><a href="<%=editaccount_admin_preferences_path%>">My Account</a></li>  
+          </ul>
+      </div>
+      <div class="span9">
+        <div class="admin">
+          <% if flash[:notice] %>
+            <div class="alert alert-success"><%= flash[:notice] %></div>
+          <% end %>        
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    
+    <%=render :partial => 'layouts/footer'%>
+
+</div>

@@ -1,0 +1,19 @@
+<style>
+  .handle:hover{cursor: move;}
+</style>
+
+<h1>Categories</h1>
+<h5>To reorder, click a category name and drag</h5>
+
+<div class="rounded-container">
+  <ul id="admin-categories-list">
+    <% @categories.each do |category| %>
+      <li id="category_<%= category.id %>">
+        <%= link_to(edit_admin_category_path(category)) do %><i class="icon-edit"></i><% end %>
+        <%= link_to(admin_category_path(category), :confirm => 'Are you sure?', :method => :delete) do %><i class="icon-trash"></i><% end %>      
+        &nbsp;<span class="handle"><strong><%= category.name %></strong>&nbsp;<%= '(' + category.description + ')' if (category.description && category.description != '') %></span>
+      </li>
+    <% end %>
+  </ul>
+  <div class="admin-list-action"><%= link_to "Add a new category", new_admin_category_path %></div>
+</div>

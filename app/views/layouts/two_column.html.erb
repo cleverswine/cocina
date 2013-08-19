@@ -1,0 +1,29 @@
+<%=render :partial => 'layouts/header'%>    
+    
+<%=render :partial => 'layouts/nav'%>
+
+<div class="container">
+
+    <div class="row">
+      <div class="span3">
+          <h2>Categories</h2>
+          <div id="left_nav_cats">
+            <%=render :partial => 'layouts/left_nav_cats'%>
+          </div>
+          <h2>Index</h2>
+          <ul class="left-nav">
+              <li<%=" class='active'" if (@filters[:tag] == '' && @filters[:category_id] == '') || params[:all] %>>
+                <a href="<%=recipes_path(:all => '1')%>">All Recipes&nbsp;<span class="tag-count">(<%=get_recipe_count%>)</span></a>                
+              </li>
+              <li class="li-tag"><a href="<%=indx_recipes_path%>">By Name</a></li>
+              <li class="li-tag"><a href="<%=indx_recipes_path(:s => 's')%>">By Source</a></li>
+          </ul>          
+      </div>
+      <div class="span9">
+        <%= yield %>
+      </div>
+    </div>
+    
+    <%=render :partial => 'layouts/footer'%>
+
+</div>

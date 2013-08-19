@@ -1,0 +1,41 @@
+<h1>Categories :: Remove Category Options</h1>
+<h5>Select an option below, or return to the category list</h5>
+
+<% if @category.errors.any? 
+  @category.errors.full_messages.each do |msg|  %>
+    <div class="alert alert-error"><%= msg %></div>
+<% end
+end %>
+
+<div class="rounded-container">
+  <%= form_for(@category, :url => admin_category_path, :html => { :class => "form-horizontal" }, :method => :delete) do |f| %>
+  <fieldset>  
+    <div class="control-group">
+      <strong>Option 1:</strong> <u>Delete</u> all recipes that are filed under <%=@category.name%>?
+    </div>
+    <%=hidden_field_tag 'killemall', '1'%>
+    <div>
+      <%= f.submit 'Yes, delete the recipes', :class => 'btn btn-primary' %>
+      &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'No, return to category list.', admin_categories_path %>
+    </div>    
+  </fieldset>
+  <% end %>
+</div>
+
+<div class="rounded-container">
+  <%= form_for(@category, :url => admin_category_path, :html => { :class => "form-horizontal" }, :method => :delete) do |f| %>
+  <fieldset>  
+    <div class="control-group">
+      <strong>Option 2:</strong> <u>Move</u> all recipes that are filed under <%=@category.name%> to this category:
+    </div>
+    <%=hidden_field_tag 'moveemall', '1'%>
+    <div class="control-group">
+      <%=select_tag "newcategory", options_from_collection_for_select(@categories, "id", "name")%>    
+    </div>    
+    <div>    
+      <%= f.submit 'Yes, move the recipes', :class => 'btn btn-primary' %>
+      &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'No, return to category list.', admin_categories_path %>
+    </div>    
+  </fieldset>
+  <% end %>
+</div>

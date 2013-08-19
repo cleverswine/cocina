@@ -1,0 +1,86 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+
+<% if !is_print %>
+<div class="page-nav">
+  <a class="btn" href="<%=recipes_url %>"><i class="icon-chevron-left"></i>&nbsp;Recipe List</a>            
+  <a class="btn" href="<%=edit_recipe_path(@recipe) %>"><i class="icon-edit"></i>&nbsp;Edit</a>        
+  <%= link_to(recipe_path(@recipe), :confirm => 'Are you sure?', :method => :delete, :class => "btn") do %><i class="icon-trash"></i>&nbsp;Remove<% end %>      
+  <a class="btn" href="<%=recipe_photos_path(@recipe)%>"><i class="icon-picture"></i>&nbsp;Photos</a>
+  <a class="btn" href="<%=print_recipe_path(@recipe) %>"><i class="icon-print"></i>&nbsp;Print View</a>       
+</div>
+<% end %>
+
+<h1><%=@recipe.title %></h1>
+
+<% if @recipe.description %>
+<div class="recipe-description recipe-section">
+  <%=@recipe.description %>
+</div>
+<% end %>
+
+<% photo_count = is_print ? 0 : @recipe.photos.length %>
+<% if photo_count > 0 %>
+  <% allphotos = @recipe.photos.order('is_primary desc').order('created_at desc') %>
+  <div class="recipe-image recipe-section">
+      <table><tr>
+          <td>
+            <%= image_tag allphotos[0].photo.url(:medium), :id => 'bigimage', :class => 'big-image' %>
+          </td>
+          <% if photo_count > 1 %>
+            <% i = 0 %>
+            <td>
+              <% allphotos.each do |photo| %>
+                <% if i == 3 %></td><td><% end %>
+                <a href='#' class="thumb-link" rel="<%=photo.photo.url(:medium) %>"><img src="<%=photo.photo.url(:thumb) %>" alt="" class='thumb'/></a> 	
+                <br/>  
+                <% i += 1 %>
+              <% end %>                 
+            </td>
+          <% end %>
+      </tr></table>
+  </div>
+<% end %>
+
+<div class="recipe-yield recipe-section">
+     <i class="icon-hand-right"></i>&nbsp;Servings: <%=@recipe.servings %> 
+     <br/>
+     <i class="icon-hand-right"></i>&nbsp;Preparation Time: <%=@recipe.time_to_make %>
+</div>            
+
+<div class="row">
+    <div class="span12 recipe-card">
+        <div class="span4" style="margin-left: 0px;">        
+            <div class="left-half">
+                <h2>Ingredients</h2>
+                <div class="recipe-ingredients recipe-section">
+                    <%=raw @recipe.ingredients %>             
+                </div> 
+            </div>
+        </div>
+        <div class="span8" style="margin-left: 0px;">
+            <div class="right-half">
+              <h2>Instructions</h2>
+              <div class="recipe-instructions recipe-section">
+                  <%=raw @recipe.instructions %>               
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="recipe-meta recipe-section">
+    Filed under: <%=link_to @recipe.category.name, recipes_by_category_url(:category_id => @recipe.category.id) %> :: 
+      <%=@recipe.tags.collect{|tag| link_to tag.name, recipes_by_category_and_tag_url(:category_id => @recipe.category.id, :tag => tag.name)}.join(', ').html_safe %><br>
+    <% if @recipe.source_detail != '' || @recipe.source != '' %>
+      Source:               
+        <% if @recipe.source_detail.start_with?("http") %>
+          <a href="<%=@recipe.source_detail%>"><%=@recipe.source != '' ? @recipe.source : @recipe.source_detail %>&nbsp;<i class="icon-globe"></i></a>
+        <% else %>
+          <%=@recipe.source %><%= ', ' if @recipe.source_detail != '' %><em><%=@recipe.source_detail %></em>
+        <% end %><br>
+    <% end %>
+    Created on <%=@recipe.created_at.strftime("%m/%d/%Y") %> by kevboo 
+    <%= ' and updated on ' + @recipe.updated_at.strftime("%m/%d/%Y") if @recipe.created_at.strftime("%m/%d/%Y") != @recipe.updated_at.strftime("%m/%d/%Y") %>
+</div>

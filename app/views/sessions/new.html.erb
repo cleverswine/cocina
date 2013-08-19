@@ -1,0 +1,37 @@
+<% if flash[:alert] %>
+    <div class="alert alert-error"><%= flash[:alert] %></div>
+<% end %>
+
+<div class="recipe-view">
+
+  <%= form_tag(login_url, :class => 'form-vertical') do %>
+    <fieldset>
+      <h2>Sign In</h2>
+      <em>You must be signed in to experience the fabulousness of La Cocina.</em>
+      <br/><br/>
+      <div class="control-group">
+        <%= label_tag(:name, nil, :class => "control-label") %> 
+        <div class="controls">
+          <%= text_field_tag :name, params[:name], :class => "input-xlarge focused" %>  
+        </div>
+      </div>
+      <div class="control-group">
+        <%= label_tag :password, nil, :class => "control-label" %>  
+        <div class="controls">
+          <%= password_field_tag :password, nil, :class => "input-xlarge" %>  
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <label class="checkbox">
+            <%= check_box_tag :remember_me, 1, params[:remember_me] %><%= label_tag :remember_me, nil, :class => "control-label" %>
+          </label>
+        </div>
+      </div>   
+      <div style="padding-top: 18px;">
+        <%= submit_tag "Sign In", :class => "btn btn-primary" %>
+      </div>    
+    </fieldset>
+  <% end %>
+
+</div>

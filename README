@@ -1,0 +1,188 @@
+== Plan  
+      
+  1.4.0 (Better category/tag selection II)
+    -> update version in footer
+    -> recipe index - dialog with catgeory drop-down + tag checkboxes (make partial from recipe form)
+    
+  2.0.0 (True multi user)
+    -> refactoring - ajaxify (http://www.alfajango.com/blog/rails-3-remote-links-and-forms/)
+    -> update version in footer
+    -> Multi-user - model ownership, queries by user
+    -> Multi-user - use IsAdmin authorization for controller actions
+    -> Register for account workflow... need to confirm via email, or via admin approval
+    -> on create user, must also create preferences or errors will occur
+    -> Add email address to user model
+    -> ? drop is_admin in favor of roles (admin, creator, browser, etc)
+    -> ? Hide/restrict all editing actions from non-admin, creator role  
+    -> send email to admins when new user is created (and maybe other events)
+
+  2.x.0 (Landing page)
+    -> create a landing page...
+    
+  2.x.0 (Export)
+    -> export recipes from UI to ? format (multiple formats: rtf, html, txt, delim, yaml)
+  
+  3.x.0 (Sharing)
+    -> Share recipe
+      -> via email
+      -> Facebook
+      -> Twitter
+  
+  3.x.0 (Cross User Sharing)
+    -> share recipes with other users
+    
+  Future
+    -> thumb gallery - when click on thumb, spinny dial while big image loads    
+    -> more responsive enhancements? see: (http://twitter.github.com/bootstrap/scaffolding.html#responsive)
+    -> easy way to add photo from phone
+    -> non-logged in view/browse
+    -> Ajaxify some parts?
+    -> scarfer - Select image from list (a la amazon wishlist)
+    -> js -> coffee?
+    -> better sass
+    -> Feedback/tasks in admin to track... this
+    -> Ajax search - live refresh of search results as you type (filter only)
+    -> Ajax Category/Tag selection - live refresh of results when cat/tag selected in nav
+    -> scarfer admin - save test url with each scarfer?
+    -> Drag/drop recipe into Category/Tag in nav
+    -> Consider splash/home screen instead of All Recipes as default.
+    -> style the file inputs (photos, scarfers) 
+    -> ?box layout on index, like this http://www.yummly.com/recipes/eggplant-parmesan
+    -> Allow adding custom links in the "Tools" menu
+    
+== Past
+
+  major.feature.bugfix-revision
+
+  1.0.1-213
+    ->< Auto post-back when sort drop-down is changed
+    ->< Update tag name - handle if new name is already being used
+    ->< Change password screen
+    ->< Cookie to remember sort selection ?
+    ->< Initiate search when auto-complete item is selected
+    ->< Recipe error message - "Tag list can't be blank" isn't correct + field doesn't highlight
+    ->< When recipe source detail is a url, make the source name a link to the url on the show view
+    ->< When displaying dates, adjust for time zone, maybe hide time (show view)
+    ->< Set primary photo
+    ->< After create new recipe, nav/recipe list not in sync
+    ->< Top search is behaving like filter (should search all always)
+    ->< Import recipe from url - textbox too long
+    
+  1.0.1-224 (UI overhaul)
+    ->< "Log Out" should be last in dropdown list
+    ->< UI Overhaul
+    ->< background is transaparent on rich text boxes in edit mode
+    ->< new icons, seperator for Tools items?
+    ->< change "By Recipe Name"... remove "[A-Z]" since it's default?    
+    ->< refactor styles    
+    ->< show ingredients, instructions side by side, a la http://yumtab.com/recipes/9650 and http://tastykitchen.com/blog/2012/06/baked-falafel-pita/
+    ->< show servings, cook time, etc like this: http://www.marthastewart.com/print/337905
+    ->< make photos look more like polaroids    
+    ->< blue background looks washed out
+    ->< edit recipe (and others) view needs a border/background
+  
+  1.0.1-225 (UI fixes)
+    ->< remove "M" from build number 
+    ->< responsive design (bootstrap) - top nav, left nav
+    ->< different top nav colors...
+    ->< Highlight All Recipes when showing all
+    ->< Hide svn revision number (white font)    
+
+  1.1.0-229 (Admin features)
+    ->< proper release numbering
+    ->< update version in footer
+    ->< migration to set current user to admin
+    ->< UI show/hide based on user IsAdmin
+    ->< Scarfer
+      ->< move scarfers from Admin to Tools.  
+      ->< Provide read-only view for non-admin. 
+      ->< Show domain match in list view
+      ->< remove the word "Manage" from scarfers page
+      ->< on failed scarfer import, fill in Url 
+      ->< on failed scarfer import, get page title for title
+      ->< scarfer - check for valid photo url before trying to paperclip it (or catch and show exception?)
+      ->< Scarfer fields need to be text, not string
+      ->< export/import scarfers? (yaml?)
+    ->< migration to create non-admin user
+    ->< add Admin left nav showing list of admin pages (cat, tags, users, scarfers, etc)
+    ->< Allow change user name    
+    ->< validate name uniqueness
+    ->< seperate page for account settings (pwd, etc) - not in preferences screen.
+    ->< add left nav to show user settings pages (pref, acct, etc)
+    ->< New admin page to show list of users with is_admin status
+    -><- Admin can add, edit, and delete users
+    
+  1.1.1-232 (Minor UI fixes, Bug fixes, Code cleanup)
+    ->< update version in footer
+    ->< consolidate javascripts to main js file
+    ->< move recipe scarfer code to model
+    ->< move recipe photo from url to model
+    ->< on import, if error on create, we lose the photo url
+    ->< more spacing between <li> items in ingredients and instructions    
+    ->< [built in] handle exceptions for tampered urls (example: invalid recipe id, tag, or category id in url)
+    ->< export scarfer - only first space is replaced by _ in file name
+    ->< log in screen - get rid of red alert at top
+    ->< recipe show - left padding on instr and ingr should be same (see on phone)
+    ->< only show updated_at date if != created_at date (recipe show and other places)
+    ->< Nice 404, 500 pages
+    ->< Move preferences to Admin namespace
+    ->< edit/delete users...  
+      ->< can't delete self (takes care of preserving admin)
+      ->< can't change self to non-admin
+
+  1.1.2-233 (Auto-complete broken)
+    ->< update version in footer
+    ->< Autocomplete on search fields isn't working
+    ->< remove em from footer (em on whole footer)
+    ->< change version numer to have '-' revision (1.1.2-xxx)
+    
+  1.1.3-234 (Search fixes)
+    ->< global search returns everything (globalterm is ignored)
+    ->< use linq/scopes style
+    ->< update version in footer
+    ->< remove sort cookie, selected sort should be session only  
+    
+  1.1.4-237 (bug fixes, minor UI enhancements)
+    ->< fix nav-bar funkiness (width, gap at top on responsive)
+    ->< title gets lost on index (click category/tag, note title/url.  Got to root, note query remains, url/title gone)
+    ->< try having links for sorting instead of drop-down
+    ->< scarfer admin - link to source site (using url match)
+    ->< on search results, add option 'Best Match' (or something) and return title matches first    
+    ->< 'Best Match' only applies if searching...   
+    ->< index - show action buttons on hover (instead of dropdown)
+    ->< transparent overlay over thumb in index (or over box) showing image count, if > 1
+    ->< use textbox (or dropdown) for servings on recipe edit (still restrict to numeric)
+    ->< when no source filled in, recipe shows ' , '
+    
+  1.2.0-240 (recipe index, cache)     
+    ->< update version in footer       
+    ->< create a recipe index, a la http://www.simplyrecipes.com/recipe-index.php
+      ->< by name
+      ->< by source
+    ->< use low level cache instead of session for categories
+    ->< show counts of tags, index items in left nav, i.e. Chicken (10), All Recipes (120)  
+
+  1.2.0-241 (bug fix)     
+    ->< Hide source on index page if none
+    
+  1.3.0-244 (Better category/tag selection)
+    ->< update version in footer
+    ->< edit recipe view - easier way to pick tags. check boxes
+    ->< index view - drag and drop recipe to tag in left nav
+    ->< edit recipe - set focus to Title on page load
+    ->< edit recipe - see if a degrees symbol can be added to the rich text boxes (use superscript)
+    ->< remove rating
+    ->< easy way to change tags from index view - drag/drop    
+    ->< bundle update
+    
+    
+== Version
+
+  ** ruby 1.8.7 / rails 3.2.3 **
+
+    Set up dev env to match a2:
+
+      install RailsInstaller v 1.3.0
+      gem update --system 1.6.2
+      gem install rails --version 3.2.3 --no-rdoc --no-ri
+      bundle install

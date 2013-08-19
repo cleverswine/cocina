@@ -1,0 +1,27 @@
+<h1>Registered Users</h1>
+
+<div class="rounded-container">
+  <ul>
+    <% @users.each do |user| %>
+      <li>
+          <table style="border:0;">
+          <tr><td style="vertical-align: middle; padding-right: 6px;">                 
+            <%= link_to(edit_admin_user_path(user), :title => 'Edit') do %><i class="icon-edit"></i><% end %>
+            <% if current_user.id != user.id %>
+              <%= link_to(admin_user_path(user), :confirm => 'Are you sure?', :method => :delete, :title => 'Remove') do %><i class="icon-trash"></i><% end %>      
+            <% else %>
+              &nbsp;&nbsp;&nbsp;
+            <% end %>
+          </td>
+          <td style="vertical-align: top;">
+            <strong><%= user.name %></strong> <%= '(Administrator)' if user.is_admin %>
+             <% if user.description != '' %><br/><em><%= user.description %></em><% end %>
+            <br/>             
+            <em>created: <%= user.created_at.strftime("%m/%d/%Y") %><%= ', updated: ' + user.updated_at.strftime("%m/%d/%Y") if user.created_at.strftime("%m/%d/%Y") != user.updated_at.strftime("%m/%d/%Y") %></em>
+          </td></tr>
+          </table>          
+      </li>
+    <% end %>
+  </ul>
+  <div class="admin-list-action"><%= link_to "Create a new user", new_admin_user_path %></div>
+</div>

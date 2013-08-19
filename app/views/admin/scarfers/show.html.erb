@@ -1,0 +1,22 @@
+<h1>Scarfers :: <%=@scarfer.name %></h1>
+
+<div class="rounded-container">
+  <p>URL Match: <strong><%=@scarfer.url_match %></strong></p>
+  <p>Source Name: <strong><%=@scarfer.source_name %></strong></p>
+  <p><em>Created on <%=@scarfer.created_at.strftime("%m/%d/%Y") %><%= ' and updated on ' + @scarfer.updated_at.strftime("%m/%d/%Y") if @scarfer.created_at.strftime("%m/%d/%Y") != @scarfer.updated_at.strftime("%m/%d/%Y") %></em></p>
+</div>
+
+<span>Title</span>
+<pre><%=@scarfer.title %></pre>
+<span>Description</span>
+<pre><%=@scarfer.description %></pre>
+<span>Ingredients</span>
+<pre><%=@scarfer.ingredients %></pre>
+<span>Instructions</span>
+<pre><%=@scarfer.instructions %></pre>
+<span>Photo</span>
+<pre><%=@scarfer.photo %></pre>
+<span>Time to make</span>
+<pre><%=@scarfer.time_to_make %></pre>
+<span>Servings</span>
+<pre><%=@scarfer.servings %></pre>

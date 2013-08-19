@@ -1,0 +1,40 @@
+<h1>Scarfers</h1>
+<h5>Scarfers pull in recipe details from other web sites</h5>
+
+<% if current_user.is_admin %>
+<div id="admin-scarfer-import" title="Import Scarfer">
+  <%= form_tag(import_admin_scarfers_path, :multipart => true, :method => :post) do %>
+      <fieldset class="control-group">
+      <%= label_tag('Select the yaml file containing the exported scarfer', nil, :class => "control-label") %> 
+        <div class="controls">
+          <%= file_field_tag :yaml_file %>
+        </div>
+        <div class="controls">
+          <%= submit_tag 'Import', :class => 'btn btn-primary' %>
+        </div>
+      </fieldset>          
+  <% end %>  
+</div>
+<% end %>
+
+<div class="rounded-container">
+  <ul>
+    <% @scarfers.each do |scarfer| %>
+      <li>
+        <%= link_to admin_scarfer_path(scarfer), :title => 'Show' do %><i class="icon-eye-open"></i><% end %>
+        <% if current_user.is_admin %>
+          <%= link_to(edit_admin_scarfer_path(scarfer), :title => 'Edit') do %><i class="icon-edit"></i><% end %>
+          <%= link_to(admin_scarfer_path(scarfer), :confirm => 'Are you sure?', :method => :delete, :title => 'Remove') do %><i class="icon-trash"></i><% end %>      
+          <%= link_to(export_admin_scarfer_path(scarfer), :title => 'Export') do %><i class="icon-share-alt"></i><% end %>          
+        <% end %>
+        &nbsp;<strong><%= scarfer.name %></strong> (<%=link_to scarfer.url_match, scarfer.url_match_qualified, :target => '_blank' %>)
+      </li>
+    <% end %>
+  </ul>
+  <% if current_user.is_admin %>
+    <div class="admin-list-action"><%= link_to "Create a new scarfer", new_admin_scarfer_path %>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" id="admin-scarfer-import-btn">Import a scarfer from file</a></div>
+  <% end %>
+</div>
+
+<br/><br/>
+Bookmarklet -&gt; &nbsp;<a href="javascript:(function(){ window.open('<%=new_recipe_url%>?url=' + encodeURIComponent(location.href)); })();">+ Recipe</a>

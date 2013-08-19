@@ -1,0 +1,24 @@
+<h1>Tag (sub-category) maintenance</h1>
+<h5>To change a tag name, select the current name and enter a new name.  
+<br/>This changes the name globally, across categories.</h5>
+
+<div class="rounded-container">
+  <%= form_tag(tagname_admin_categories_path, :method => :post, :class => 'form-vertical') do %>
+  <fieldset>  
+    <div class="control-group">
+      <%= label_tag('Tag (sub-category)', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%=select_tag('tagname', options_from_collection_for_select(Tag.all, "name", "name"), :class => 'span3') %>      
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag('New name', nil, :class => "control-label") %> 
+      <div class="controls">
+        <%=text_field_tag 'newtag', nil, :class => 'span3' %> 
+      </div>
+    </div>
+    <div>
+      <%= submit_tag 'Change it', :class => 'btn btn-primary' %>   
+    </div> 
+  <% end %>
+</div>
